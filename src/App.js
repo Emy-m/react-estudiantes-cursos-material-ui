@@ -1,25 +1,45 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react';
+import ResponsiveAppBar from './Componentes/ResponsiveAppBar';
+import Body from './Componentes/Body';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+export default class App extends Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      paginas: ["Estudiantes", "Cursos"],
+      pagina: "Inicio",
+      filtroApellido: "",
+      cursoInscripcion: ""
+    }
+  }
+
+  cambiarPagina = (pagina) => {
+    this.setState({
+      pagina: pagina
+    })
+  }
+
+  filtrarEstudiantes = (event) => {
+    this.setState({
+      filtroApellido: event.target.value,
+      pagina: "Estudiantes"
+    })
+  }
+
+  inscripcion = (curso) => {
+    this.setState({
+      cursoInscripcion: curso,
+      pagina: "Inscripcion"
+    })
+  }
+
+  render(){
+    const { pagina, paginas, filtroApellido, cursoInscripcion } = this.state;
+    return (
+      <div>
+        <ResponsiveAppBar paginas={paginas} cambiarPagina={this.cambiarPagina} filtrarEstudiantes={this.filtrarEstudiantes} />
+        <Body inscripcion={this.inscripcion} cursoInscripcion={cursoInscripcion} pagina={pagina} filtroApellido={filtroApellido} />
+      </div>
+    );
+  }
 }
-
-export default App;
