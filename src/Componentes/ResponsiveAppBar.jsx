@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -51,75 +51,67 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-export default class ResponsiveAppBar extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      paginas: props.paginas,
-    };
-  }
+export default function ResponsiveAppBar(props) {
+  const [paginas] = useState(props.paginas);
+  const { cambiarPagina, filtrarEstudiantes } = props;
 
-  render() {
-    const { paginas } = this.state;
-    const { cambiarPagina, filtrarEstudiantes } = this.props;
-    return (
-      <AppBar position="static">
-        <Container maxWidth="xl">
-          <Toolbar disableGutters>
-            <Typography
-              variant="h6"
-              noWrap
-              component="div"
-              sx={{ mr: 2, display: { xs: "none", md: "flex" } }}
+  return (
+    <AppBar position="static">
+      <Container maxWidth="xl">
+        <Toolbar disableGutters>
+          <Typography
+            variant="h6"
+            noWrap
+            component="div"
+            sx={{ mr: 2, display: { xs: "none", md: "flex" } }}
+          >
+            LOGO
+          </Typography>
+
+          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
+            <IconButton
+              size="large"
+              aria-label="account of current user"
+              aria-controls="menu-appbar"
+              aria-haspopup="true"
+              color="inherit"
             >
-              LOGO
-            </Typography>
-
-            <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
-              <IconButton
-                size="large"
-                aria-label="account of current user"
-                aria-controls="menu-appbar"
-                aria-haspopup="true"
-                color="inherit"
+              <MenuIcon />
+            </IconButton>
+          </Box>
+          <Typography
+            variant="h6"
+            noWrap
+            component="div"
+            sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}
+          >
+            LOGO
+          </Typography>
+          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
+            {paginas.map((pagina) => (
+              <Button
+                key={pagina}
+                sx={{ my: 2, color: "white", display: "block" }}
+                onClick={() => {
+                  cambiarPagina(pagina);
+                }}
               >
-                <MenuIcon />
-              </IconButton>
-            </Box>
-            <Typography
-              variant="h6"
-              noWrap
-              component="div"
-              sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}
-            >
-              LOGO
-            </Typography>
-            <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-              {paginas.map((pagina) => (
-                <Button
-                  key={pagina}
-                  sx={{ my: 2, color: "white", display: "block" }}
-                  onClick={() => {
-                    cambiarPagina(pagina);
-                  }}
-                >
-                  {pagina}
-                </Button>
-              ))}
-            </Box>
-            <Search>
-              <SearchIconWrapper>
-                <SearchIcon />
-              </SearchIconWrapper>
-              <StyledInputBase
-                placeholder="Buscar..."
-                inputProps={{ "aria-label": "search" }}
-                onChange={filtrarEstudiantes}
-              />
-            </Search>
-          </Toolbar>
-        </Container>
-      </AppBar>
-    );
-  }
+                {pagina}
+              </Button>
+            ))}
+          </Box>
+          <Search>
+            <SearchIconWrapper>
+              <SearchIcon />
+            </SearchIconWrapper>
+            <StyledInputBase
+              placeholder="Buscar..."
+              inputProps={{ "aria-label": "search" }}
+              onChange={filtrarEstudiantes}
+            />
+          </Search>
+        </Toolbar>
+      </Container>
+    </AppBar>
+  );
 }
