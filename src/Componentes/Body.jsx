@@ -142,6 +142,7 @@ export default class Body extends Component {
             datos={estudiantes}
             encabezados={encabezadosEstudiantes}
             filtroApellido={filtroApellido}
+            agregarEstudiante={this.agregarEstudiante}
           />
         )}
         {pagina === "Inscripcion" && (
